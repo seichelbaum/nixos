@@ -120,7 +120,7 @@
       # Set DC_DISABLE_REPLAY
       # "amdgpu.dcdebugmask=0x400"
       # Set DC_DISABLE_PSR only
-      # "amdgpu.dcdebugmask=0x10"
+      "amdgpu.dcdebugmask=0x10"
 
       # The default for AMD pstate is "active", Also possible: "passive" and "guided"
       "amd_pstate=guided"

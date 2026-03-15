@@ -2,7 +2,12 @@
 # The base setup for all desktops
 #
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
 
@@ -41,7 +46,7 @@
   services.greenclip.enable = true;
 
   # Light control
-  programs.light.enable = true;
+  hardware.acpilight.enable = true;
 
   # The GPG agent to store unlocked keys per session
   programs.gnupg.agent.enable = true;
@@ -92,7 +97,9 @@
   ];
 
   # Make kitty the default for those that respect the TERMINAL variable
-  environment.variables = { TERMINAL = "${pkgs.kitty}/bin/kitty"; };
+  environment.variables = {
+    TERMINAL = "${pkgs.kitty}/bin/kitty";
+  };
 
   # }}}
 
