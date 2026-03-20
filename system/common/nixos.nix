@@ -44,13 +44,6 @@
     # TUI to browse through the store and search for packages.
     nix-tree
 
-    # Provide an nix package file index. If you need to know which package contains a file, use this.
-    # Example:
-    #   * nix-locate 'bin/hello' - list packages that contain a bin/hello file
-    #
-    # Requires a regular run of nix-index
-    # nix-index
-
     # Code formatter for nix.
     nixfmt
   ];
@@ -68,6 +61,13 @@
   # does not understand your terminal. I.e. kitty uses zterm-kitty that would
   # trigger an invalid term definition alert.
   environment.enableAllTerminfo = lib.mkDefault true;
+
+  # Provide an nix package file index. If you need to know which package contains a file, use this.
+  # Example:
+  #   * nix-locate 'bin/hello' - list packages that contain a bin/hello file
+  #
+  # After enabling, be patient. An index has to be built and this can take a while.
+  programs.nix-index.enable = true;
 
   #############################################################################
   # Nix house-holding Setup
