@@ -10,8 +10,7 @@
 
     SysConfig.stateVersion = lib.mkOption {
       type = lib.types.str;
-      description =
-        "The nixos state version. Check https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion for detail";
+      description = "The nixos state version. Check https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion for detail";
       # WARNING: do not define a default here. If this default ever changes, all
       # systems that rely on that default might break!
     };
@@ -23,8 +22,7 @@
 
     SysConfig.hostPlatform = lib.mkOption {
       type = lib.types.str;
-      description =
-        "The platform of this machine. Usually x86_64-linux. This is used for nixpkgs ...";
+      description = "The platform of this machine. Usually x86_64-linux. This is used for nixpkgs ...";
       default = "x86_64-linux";
     };
 
@@ -33,8 +31,7 @@
       default = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb soph@worky"
       ];
-      description =
-        "SSH public keys that are authorized by default for the main user and root. This ensures that you can log into that machine.";
+      description = "SSH public keys that are authorized by default for the main user and root. This ensures that you can log into that machine.";
     };
 
     ###########################################################################
@@ -56,8 +53,7 @@
 
       passHash = lib.mkOption {
         type = lib.types.str;
-        description =
-          "The main user's password hash. Use mkpasswd to generate.";
+        description = "The main user's password hash. Use mkpasswd to generate.";
       };
 
       extraGroups = lib.mkOption {
@@ -69,8 +65,7 @@
       authorizedKeys = lib.mkOption {
         type = lib.types.listOf (lib.types.str);
         default = [ ];
-        description =
-          "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
+        description = "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
       };
     };
 
@@ -81,15 +76,13 @@
     SysConfig.root = {
       passHash = lib.mkOption {
         type = lib.types.str;
-        description =
-          "The root user's password hash. Use mkpasswd to generate.";
+        description = "The root user's password hash. Use mkpasswd to generate.";
       };
 
       authorizedKeys = lib.mkOption {
         type = lib.types.listOf (lib.types.str);
         default = [ ];
-        description =
-          "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
+        description = "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
       };
     };
 
@@ -100,15 +93,13 @@
     SysConfig.hardware.nvidia.prime = {
       intelBusId = lib.mkOption {
         type = lib.types.str;
-        description = ''
-          When using NVidia prime, specify the bus ID of the Intel GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
+        description = ''When using NVidia prime, specify the bus ID of the Intel GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
         default = "PCI:0:2:0";
       };
 
       nvidiaBusId = lib.mkOption {
         type = lib.types.str;
-        description = ''
-          When using NVidia prime, specify the bus ID of the Nvidia GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
+        description = ''When using NVidia prime, specify the bus ID of the Nvidia GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
         default = "PCI:1:0:0";
       };
     };
@@ -121,10 +112,26 @@
 
     # A shared Syncthing configuration and a common server is used among all machines.
     # It is on if a server device ID is specified. If not, syncthing will be disabled completely.
-    SysConfig.syncthing.serverId = lib.mkOption {
-      type = lib.types.str;
-      description = "Syncthing main server to use on this system.";
-      default = "";
+    SysConfig.syncthing = {
+      devices = {
+        serverId = lib.mkOption {
+          type = lib.types.str;
+          description = "Syncthing main server to use on this system.";
+          default = "";
+        };
+
+        phoneId = lib.mkOption {
+          type = lib.types.str;
+          description = "Syncthing ID of the phone to sync photos from/to.";
+          default = "";
+        };
+
+        pcId = lib.mkOption {
+          type = lib.types.str;
+          description = "Syncthing ID of the main PC to sync data from/to.";
+          default = "";
+        };
+      };
     };
   };
 }

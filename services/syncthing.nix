@@ -1,11 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   #############################################################################
   # Syncthing
   #
 
-  services.syncthing = lib.mkIf (config.SysConfig.syncthing.serverId != "") {
+  services.syncthing = lib.mkIf (config.SysConfig.syncthing.devices.serverId != "") {
     enable = true;
     systemService = true;
 
@@ -25,6 +30,8 @@
     guiAddress = "127.0.0.1:8384";
 
     # Allow the user to modify folders and device lists?
+    # True = Only the config file can be used to change these folders/devices.
+    # False = The user can use the web interface to change folders/devices.
     overrideFolders = true;
     overrideDevices = true;
 
@@ -48,23 +55,45 @@
         #   * Browse to localhost:9092
         "Server" = {
           # Never changes if the original key and cert is kept
-          id = config.SysConfig.syncthing.serverId;
+          id = config.SysConfig.syncthing.devices.serverId;
           introducer = true;
+        };
+        "Phone" = lib.mkIf (config.SysConfig.syncthing.devices.phoneId != "") {
+          id = config.SysConfig.syncthing.devices.phoneId;
+        };
+        "PC" = lib.mkIf (config.SysConfig.syncthing.devices.pcId != "") {
+          id = config.SysConfig.syncthing.devices.pcId;
         };
       };
 
       folders = {
         "Shared" = {
           versioning.type = "simple";
-          versioning.params = { keep = "3"; };
+          versioning.params = {
+            keep = "3";
+          };
           path = "~/Shared";
-          devices = [ "Server" ];
+
+          # Share with server and, if not "", the PC and phone.
+          devices = [
+            "Server"
+          ]
+          ++ lib.optional (config.SysConfig.syncthing.devices.pcId != "") "PC"
+          ++ lib.optional (config.SysConfig.syncthing.devices.phoneId != "") "Phone";
+
         };
         "Handyfotos" = {
           versioning.type = "simple";
-          versioning.params = { keep = "3"; };
+          versioning.params = {
+            keep = "3";
+          };
           path = "~/Fotos/Handyfotos";
-          devices = [ "Server" ];
+          # Share with server and, if not "", the PC and phone.
+          devices = [
+            "Server"
+          ]
+          ++ lib.optional (config.SysConfig.syncthing.devices.pcId != "") "PC"
+          ++ lib.optional (config.SysConfig.syncthing.devices.phoneId != "") "Phone";
         };
       };
     };

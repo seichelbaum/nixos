@@ -2,7 +2,12 @@
 #
 # This file is not in git and contains your setup and some secrets.
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Configure YOUR system in here. Check `system/SysConfig.nix` for a complete
@@ -62,9 +67,17 @@
     # Features
     #
 
+    # Syncthing: Share photos and ~/Shared amongst devices. Note that the IDs are defined by the keys used by this
+    # syncthing instance. So if you change the keys, the IDs will change. If you want to keep the same IDs, keep the
+    # same keys. (Considered secrets!)
+    #
     # Syncthing: The device ID of the syncthing server to use. If unset, syncthing
     # is disabled. (Considered a secret!)
-    syncthing.serverId = "123123-adssfdsd-321123-asfghdfg-234234234-sdfsdfdsf";
+    syncthing.devices.serverId = "123123-adssfdsd-321123-asfghdfg-234234234-sdfsdfdsf";
+    # Phone and PC are used to share photos and and shared docs between the devices. If unset, these devices are not
+    # added to syncthing. (Considered secrets!)
+    syncthing.devices.phoneId = "123123-adssfdsd-321123-asfghdfg-234234234-sdfsdfdsf";
+    syncthing.devices.pcId = "123123-adssfdsd-321123-asfghdfg-234234234-sdfsdfdsf";
   };
 
   # Add more packages:
