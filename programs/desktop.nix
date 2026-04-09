@@ -57,11 +57,8 @@
 
     # Ferdium replaces rocketchat-desktop, slack, discord, ...
     ferdium
-    thunderbird
     protonmail-desktop
     signal-desktop
-
-    anydesk
 
     ###########################################################################
     # Entertainment

@@ -58,8 +58,8 @@
     ## > Web stuff
     typescript-language-server
     vue-language-server
-    nodePackages.prettier
-    nodePackages.vscode-json-languageserver
+    prettier
+    vscode-json-languageserver
 
     ## > Scripting and system stuff
     stylua

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   #############################################################################
@@ -25,11 +30,10 @@
 
     # If a settings should be overwritten in extraGSettingsOverrides, the package
     # that provides the schema must be listed hereL
-    extraGSettingsOverridePackages = with pkgs;
-      [
-        # A nice way to use a custom terminal for nautilus
-        nautilus-open-any-terminal
-      ];
+    extraGSettingsOverridePackages = with pkgs; [
+      # A nice way to use a custom terminal for nautilus
+      nautilus-open-any-terminal
+    ];
   };
 
   # Configure Gnome services. This allows some detailed settings what to use
@@ -160,6 +164,9 @@
 
     # Showtime video player is trash. Basic functionality is missing.
     totem
+
+    # archive manager
+    file-roller
   ];
 
   # Required for some apps to work (to be able to query settings)
@@ -179,8 +186,7 @@
       after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart =
-          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;
@@ -198,11 +204,12 @@
   #  * https://github.com/NixOS/nixpkgs/issues/53631
   #  * https://github.com/NixOS/nixpkgs/issues/195936
   environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
-    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
-      pkgs.gst_all_1.gst-plugins-good
-      pkgs.gst_all_1.gst-plugins-bad
-      pkgs.gst_all_1.gst-plugins-ugly
-      pkgs.gst_all_1.gst-libav
-    ];
+    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0"
+      [
+        pkgs.gst_all_1.gst-plugins-good
+        pkgs.gst_all_1.gst-plugins-bad
+        pkgs.gst_all_1.gst-plugins-ugly
+        pkgs.gst_all_1.gst-libav
+      ];
 
 }
