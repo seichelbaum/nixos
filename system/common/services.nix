@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # ATTENTION: this defines some basic system services.
@@ -9,7 +14,9 @@
   #
 
   # Set the timeout of SystemD to 30s. Default is 90s.
-  systemd.settings.Manager = { DefaultTimeoutStopSec = "30s"; };
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec = "30s";
+  };
 
   # Journal keeps growing and growing. Limit.
   services.journald.extraConfig = "SystemMaxUse=100M";
@@ -20,10 +27,10 @@
     # Tell systemd where to keep those: none - disabled, journal - store alongside the journal, external - store in /var/lib/systemd/coredump.
     # Journal is usually a good choice. The Journal rotation rules apply so we do not store hundresd
     # MaxUse defines the max size of dump storage if "external"
-    extraConfig = ''
-      Storage=journal
-      MaxUse=256M
-    '';
+    settings.Coredump = {
+      Storage = "journal";
+      MaxUse = "256M";
+    };
   };
 
   # Logrotate - needed?

@@ -67,7 +67,9 @@
   #   * nix-locate 'bin/hello' - list packages that contain a bin/hello file
   #
   # After enabling, be patient. An index has to be built and this can take a while.
-  programs.nix-index.enable = true;
+  #
+  # Now enabled by default? TODO: check if this is still needed
+  # programs.nix-index.enable = true;
 
   #############################################################################
   # Nix house-holding Setup
