@@ -3,7 +3,12 @@
 #
 # Hardware: XMG Evo 14 (E25) - AMD CPU and GPU-based laptop
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   #############################################################################
@@ -58,10 +63,12 @@
   };
 
   # Swap
-  swapDevices = [{
-    device = "/swapfile";
-    size = 16 * 1024;
-  }];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   # Enable periodic TRIM on these? Its an nvme ssd that supports it. Check
   # "lsblk --discard" to validate.
@@ -179,8 +186,7 @@
           # To locate where the file is: either dd it to a partition (makes the
           # rest of the device usable) or to the device itself.
           # Specify the correct device or partition here
-          keyFile =
-            "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part3";
+          keyFile = "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part3";
         };
       };
     };
@@ -216,7 +222,9 @@
   # Allow write-access to CPU MSR
   hardware.cpu.x86.msr = {
     enable = true;
-    settings = { allow-writes = "on"; };
+    settings = {
+      allow-writes = "on";
+    };
   };
   # }}}
 
@@ -233,7 +241,10 @@
   hardware.amdgpu.initrd.enable = lib.mkDefault true;
 
   # Explicitly set the video drivers to use.
-  services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
+  services.xserver.videoDrivers = [
+    "amdgpu"
+    "modesetting"
+  ];
 
   # }}}
 
@@ -367,7 +378,9 @@
   # See: powerprofilesctl
   services.power-profiles-daemon.enable = false;
   services.tlp.enable = true;
-  services.tlp.settings = { SATA_LINKPWR_ON_BAT = "med_power_with_dipm"; };
+  services.tlp.settings = {
+    SATA_LINKPWR_ON_BAT = "med_power_with_dipm";
+  };
 
   # services.cpupower-gui.enable = false;
   #services.auto-cpufreq = {
@@ -421,14 +434,16 @@
     };
   };
 
-  /* ASPM
-     cat /sys/module/pcie_aspm/parameters/policy
-     echo powersave > /sys/module/pcie_aspm/parameters/policy
+  /*
+    ASPM
+    cat /sys/module/pcie_aspm/parameters/policy
+    echo powersave > /sys/module/pcie_aspm/parameters/policy
   */
 
-  /* CPU Performance preference
-     cat /sys/devices/system/cpu/cpufreq/policy?/energy_performance_available_preferences
-     echo "performance" > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference
+  /*
+    CPU Performance preference
+    cat /sys/devices/system/cpu/cpufreq/policy?/energy_performance_available_preferences
+    echo "performance" > /sys/devices/system/cpu/cpufreq/policy?/energy_performance_preference
   */
 
   # Some specific power save rules as well as blacklisting
@@ -468,6 +483,9 @@
   #############################################################################
   # {{{ Other Host Configuration Modules
   #
+
+  # Disabled Plymouth - only works half of the time (when loading amdgpu in initrd)
+  boot.plymouth.enable = false;
 
   imports = [
     # Use Logitech input devices

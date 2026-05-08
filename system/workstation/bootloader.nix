@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Enable Systemd in initrd. This, for once, brings up plymouth in stage 1 and
@@ -7,8 +12,7 @@
   boot.initrd.systemd.enable = true;
 
   # ENable the emergency system and set the one default password.
-  boot.initrd.systemd.emergencyAccess =
-    "$y$j9T$J6sXVbrC/yxmzJW0TyckS.$e/tdttyJafXdTGeftQU/5MXvr7uiCpFk5UYjc7fcXU3";
+  boot.initrd.systemd.emergencyAccess = "$y$j9T$J6sXVbrC/yxmzJW0TyckS.$e/tdttyJafXdTGeftQU/5MXvr7uiCpFk5UYjc7fcXU3";
 
   #############################################################################
   # Bootloader Setup
@@ -74,7 +78,7 @@
 
   # Fancy boot screen? Hint: the boot process is fast. You will see this for a
   # few seconds only. There is still some flicker going on :-(.
-  boot.plymouth.enable = true;
+  boot.plymouth.enable = lib.mkDefault true;
 
   # Nice themes: https://github.com/adi1090x/plymouth-themes
   #boot.plymouth.theme = "deus_ex";
