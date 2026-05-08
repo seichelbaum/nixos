@@ -59,6 +59,7 @@
     ferdium
     protonmail-desktop
     signal-desktop
+    thunderbird
 
     ###########################################################################
     # Entertainment
