@@ -1,4 +1,7 @@
-{ config, lib, pkgs, ... }:
+{
+  lib,
+  ...
+}:
 
 {
   #############################################################################
@@ -20,4 +23,7 @@
   # Enable the correct one in the machine-specific config.
   hardware.cpu.intel.updateMicrocode = lib.mkDefault false;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault false;
+
+  # Firmware update daemon.
+  services.fwupd.enable = lib.mkDefault true;
 }
